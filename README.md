@@ -22,7 +22,7 @@ create table if not exists test_entity
 When running the application now with `./gradlew bootRun -Dio.netty.leakDetectionLevel=paranoid`, it will start a webserver and call the single existing endpoint 5 x 1000 times in parallel.
 There will be no connection leak be found by netty. You can enable the debug logs via application.properties, to double-check.
 
-The database pool is configured to have a single short-living connection, which will then be idle. You can see a connection waiting vor the client in the postgres statistics:
+The database pool is configured to have a single short-living connection, which will then be idle, waiting for the client to fetch the payload. This connection is then also not available to the connection pool. You can see a connection waiting vor the client in the postgres statistics:
 ```sql
 select *
 from pg_stat_activity
