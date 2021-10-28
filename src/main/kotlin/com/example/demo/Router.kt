@@ -11,6 +11,6 @@ internal class AnnotatedController(private val entityDao: EntityDao) {
 
     @GetMapping
     fun get(): Mono<Entity> = entityDao.findById(UUID.randomUUID())
-        .timeout(Duration.ofMillis(100))
+//        .timeout(Duration.ofMillis(100))
 
 }

@@ -1,4 +1,4 @@
-# Reactor Netty Connection Leak
+# Reactor Netty / R2DBC Pool Connection Leak
 This demo shows how connection leaks can be provoked, when using spring boot webflux on reactor netty with spring boot data r2dbc + postgres driver.
 
 ## Prerequisites
@@ -35,4 +35,12 @@ order by pid desc;
 Also the application will not answer (or timeout) when you call it via
 ```shell
 curl --location --request GET 'http://localhost:8080/'
+```
+
+This behaviour can be avoided by using undertow instead of netty on the server side.
+If you add a timeout to the dao method call in `Router.kt`, the behaviour reappears.
+
+```kotlin
+entityDao.findById(UUID.randomUUID())
+    .timeout(Duration.ofMillis(100))
 ```
